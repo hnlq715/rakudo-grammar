@@ -22,13 +22,16 @@ grammar Grammar {
     token keyword {
         \w+
     }
+
     token variable {
         # |\$\w+
         |((\$\w+)_?)+
     }
+
     token fastcgi_pass {
         \w+':'\w+
     }
+
     token ns {
         # network space 
         # <ws> would consume, e.g., newlines, and \h (and \s) would accept 
