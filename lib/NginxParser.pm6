@@ -12,11 +12,11 @@ grammar Grammar {
 
     rule location {
         | [ <fastcgi_param> ]+
-        |"fastcgi_pass" <fastcgi_pass>";"
+        |"fastcgi_pass" <fastcgi_pass> ";"
     }
 
     rule fastcgi_param {
-        "fastcgi_param" $<key>=<keyword> $<variable>=<variable>";"
+        "fastcgi_param" $<key>=<keyword> $<variable>=<variable> ";"
     }
 
     token keyword {
