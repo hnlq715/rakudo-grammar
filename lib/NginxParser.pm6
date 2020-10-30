@@ -12,7 +12,7 @@ grammar Grammar {
 
     rule location {
         | [ <fastcgi_param> ]+
-        |"fastcgi_pass" <ipport>";"
+        |"fastcgi_pass" <fastcgi_pass>";"
     }
 
     rule fastcgi_param {
@@ -26,7 +26,7 @@ grammar Grammar {
         # |\$\w+
         |((\$\w+)_?)+
     }
-    token ipport {
+    token fastcgi_pass {
         \w+':'\w+
     }
     token ns {
