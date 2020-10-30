@@ -31,13 +31,6 @@ grammar Grammar {
     token fastcgi_pass_value {
         \w+':'\w+
     }
-
-    token ns {
-        # network space 
-        # <ws> would consume, e.g., newlines, and \h (and \s) would accept 
-        # more codepoints than just ASCII single space and the tab character. 
-        [ ' ' | <[\t]> ]*
-    }
 }
 
 class Actions {
