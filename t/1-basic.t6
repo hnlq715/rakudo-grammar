@@ -3,7 +3,7 @@ use Test;
 use lib 'lib';
 use NginxParser;
 
-plan 3;
+plan 1;
 
 my $match = NginxParser::Grammar.parse('server {
     location / {
@@ -12,12 +12,8 @@ my $match = NginxParser::Grammar.parse('server {
         fastcgi_param QUERY_STRING    $query_string;
     }
 
-    location ~ \.(gif|jpg|png)$ {
-        root /data/images;
-    }
 }', actions => NginxParser::Actions.new);
 
-say $match.made;
-is($match.made, 'localhost:9000');
+is($match<server><location>[0]<ipport>, 'localhost:9000');
 
 done-testing;
