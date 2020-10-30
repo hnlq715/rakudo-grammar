@@ -38,21 +38,5 @@ grammar Grammar {
 }
 
 class Actions {
-    method TOP($/) {
-        make {
-            ipport => $<ipport>.made;
-        }
-    }
-
-    method serverBlock($/) {
-        make $/;
-    }
-    method locationBlock($/) {
-        make $/
-    }
-    method ipport($/) {
-        make $/;
-    }
-
     method say(*@x) { }; method print(*@x) { }; method flush(*@x) { }
 }
