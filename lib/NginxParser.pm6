@@ -1,31 +1,30 @@
 unit module NginxParser;
+use Grammar::Tracer;
 
-grammar Nginx {
+grammar Grammar {
     rule TOP {
-        'server'<.ns> '{'<.ns> <serverBlock> <.ns>'}' <.ns>
+        'server' '{' <server> '}'
     }
 
-    rule serverBlock {
-        "location"<.ns> '/'<.ns> '{' 
-            [ <locationBlock> ]+
-        '<.ns>}<.ns>'
+    rule server {
+        "location" '/' '{' [ <location> ]+ '}'
     };
 
-    token locationBlock {
-        |[ "fastcgi_param" <fastcgi_param> ]+ {
-            say "fastcgi_param",$<name>,$<value>
-        }
-        |"fastcgi_pass"<.ns> <ipport><.ns>';'{
-            say 'fastcgi_pass:',$<ipport>
-        }
+    rule location {
+        | [ <fastcgi_param> ]+
+        |"fastcgi_pass" <ipport>";"
     }
 
     rule fastcgi_param {
-        <.ns> $<name>=\w+<.ns> $<value>=((\$\w+)+)<.ns>';'
+        "fastcgi_param" $<key>=<keyword> $<variable>=<variable>";"
     }
 
     token keyword {
         \w+
+    }
+    token variable {
+        # |\$\w+
+        |((\$\w+)_?)+
     }
     token ipport {
         \w+':'\w+
@@ -36,4 +35,24 @@ grammar Nginx {
         # more codepoints than just ASCII single space and the tab character. 
         [ ' ' | <[\t]> ]*
     }
+}
+
+class Actions {
+    method TOP($/) {
+        make {
+            ipport => $<ipport>.made;
+        }
+    }
+
+    method serverBlock($/) {
+        make $/;
+    }
+    method locationBlock($/) {
+        make $/
+    }
+    method ipport($/) {
+        make $/;
+    }
+
+    method say(*@x) { }; method print(*@x) { }; method flush(*@x) { }
 }

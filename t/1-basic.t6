@@ -5,7 +5,7 @@ use NginxParser;
 
 plan 3;
 
-my $match = NginxParser::Nginx.parse('server {
+my $match = NginxParser::Grammar.parse('server {
     location / {
         fastcgi_pass  localhost:9000;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -15,8 +15,9 @@ my $match = NginxParser::Nginx.parse('server {
     location ~ \.(gif|jpg|png)$ {
         root /data/images;
     }
-}');
+}', actions => NginxParser::Actions.new);
 
-say $match;
+say $match.made;
+is($match.made, 'localhost:9000');
 
 done-testing;
