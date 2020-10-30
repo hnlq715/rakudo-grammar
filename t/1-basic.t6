@@ -15,10 +15,10 @@ my $match = NginxParser::Grammar.parse('server {
 
 }', actions => NginxParser::Actions.new);
 
-is($match<server><location>[0]<fastcgi_pass>, 'localhost:9000');
-is($match<server><location>[1]<fastcgi_param>[0]<key>, 'SCRIPT_FILENAME');
-is($match<server><location>[1]<fastcgi_param>[0]<variable>, '$document_root$fastcgi_script_name');
-is($match<server><location>[1]<fastcgi_param>[1]<key>, 'QUERY_STRING');
-is($match<server><location>[1]<fastcgi_param>[1]<variable>, '$query_string');
+is($match<server><location>[0]<fastcgi_pass_value>, 'localhost:9000');
+is($match<server><location>[1]<key>, 'SCRIPT_FILENAME');
+is($match<server><location>[1]<variable>, '$document_root$fastcgi_script_name');
+is($match<server><location>[2]<key>, 'QUERY_STRING');
+is($match<server><location>[2]<variable>, '$query_string');
 
 done-testing;

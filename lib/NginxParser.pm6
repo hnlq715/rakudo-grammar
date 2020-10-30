@@ -11,13 +11,13 @@ grammar Grammar {
     };
 
     rule location {
-        | [ <fastcgi_param> ]+
-        |"fastcgi_pass" <fastcgi_pass> ";"
+        | <location_cmd> <fastcgi_pass_value> ";"
+        | <location_cmd> $<key>=<keyword> $<variable>=<variable> ";"
     }
 
-    rule fastcgi_param {
-        "fastcgi_param" $<key>=<keyword> $<variable>=<variable> ";"
-    }
+    proto token location_cmd {*}
+    token location_cmd:sym<fastcgi_pass> {<sym>}
+    token location_cmd:sym<fastcgi_param> {<sym>}
 
     token keyword {
         \w+
@@ -28,7 +28,7 @@ grammar Grammar {
         |((\$\w+)_?)+
     }
 
-    token fastcgi_pass {
+    token fastcgi_pass_value {
         \w+':'\w+
     }
 
