@@ -26,8 +26,6 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
-      - name: Raku Container Action
-        # You may pin to the exact commit or the version.
-        # uses: JJ/raku-container-action@c48601a5454080e76287a279cc03d09bdd05eb1d
-        uses: JJ/raku-container-action@v0
-        run: prove6 t/
+      - name: Runs tests
+        id: tests
+        uses: JJ/raku-container-action@master
