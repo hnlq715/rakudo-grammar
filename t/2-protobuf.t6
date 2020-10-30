@@ -1,0 +1,17 @@
+use v6;
+use Test;
+use lib 'lib';
+use Protobuf::Protobuf;
+use Grammar::Tracer;
+
+plan 2;
+
+my $match = Protobuf::Grammar.parse('
+syntax = "proto3";
+package tutorial;
+', actions => Protobuf::Actions.new);
+
+is($match<expr>[0]<syntax>, 'proto3');
+is($match<expr>[1]<package>, 'tutorial');
+
+done-testing;

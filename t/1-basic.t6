@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use lib 'lib';
-use NginxParser;
+use NginxParser::NginxParser;
 use Grammar::Tracer;
 
 plan 5;
